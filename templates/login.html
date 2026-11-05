@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block title %}Login | RideShare{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="auth-card">
+        <div class="auth-icon">🚘</div>
+
+        <span class="section-tag">WELCOME BACK</span>
+        <h1>Login to RideShare</h1>
+        <p class="auth-subtitle">Your next journey is just a login away.</p>
+
+        <form method="POST" class="auth-form">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit" class="btn btn-primary auth-submit">
+                Login to Account →
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Create Account</a>
+        </p>
+    </div>
+</section>
+
+{% endblock %}

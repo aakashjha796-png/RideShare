@@ -1,0 +1,140 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | RideShare{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-heading">
+        <span class="section-tag">YOUR PERSONAL SPACE</span>
+        <h1>Welcome, {{ session.get('user_name') }}! 👋</h1>
+        <p>Manage your journeys and explore new travel opportunities.</p>
+    </div>
+
+    <div class="dashboard-actions">
+        <a href="{{ url_for('find_ride') }}" class="btn btn-primary">
+            🔍 Find a Ride
+        </a>
+
+        <a href="{{ url_for('offer_ride') }}" class="btn btn-outline">
+            + Offer a Ride
+        </a>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <span>🚗</span>
+            <h2>{{ my_rides|length }}</h2>
+            <p>Rides Offered</p>
+        </div>
+
+        <div class="stat-card">
+            <span>🎫</span>
+            <h2>{{ my_bookings|length }}</h2>
+            <p>Rides Booked</p>
+        </div>
+
+        <div class="stat-card">
+            <span>🌍</span>
+            <h2>{{ my_rides|length + my_bookings|length }}</h2>
+            <p>Total Activities</p>
+        </div>
+    </div>
+
+    <section class="dashboard-section">
+        <div class="section-title-row">
+            <h2>My Offered Rides</h2>
+            <a href="{{ url_for('offer_ride') }}">+ Add Ride</a>
+        </div>
+
+        {% if my_rides %}
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Seats</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for ride in my_rides %}
+                        <tr>
+                            <td>{{ ride.source }}</td>
+                            <td>{{ ride.destination }}</td>
+                            <td>{{ ride.ride_date }}</td>
+                            <td>{{ ride.ride_time }}</td>
+                            <td>{{ ride.seats }}</td>
+                            <td>₹{{ "%.2f"|format(ride.price) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No rides offered yet 🚘</h3>
+                <p>Share your journey and offer a ride to others.</p>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="dashboard-section">
+        <div class="section-title-row">
+            <h2>My Bookings</h2>
+            <a href="{{ url_for('my_bookings') }}">View All →</a>
+        </div>
+
+        {% if my_bookings %}
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Seats</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for booking in my_bookings %}
+                        <tr>
+                            <td>{{ booking.source }}</td>
+                            <td>{{ booking.destination }}</td>
+                            <td>{{ booking.ride_date }}</td>
+                            <td>{{ booking.ride_time }}</td>
+                            <td>{{ booking.seats_booked }}</td>
+                            <td>
+                                <span class="status-badge">
+                                    {{ booking.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No bookings yet 🎫</h3>
+                <p>Find a ride and book your next journey.</p>
+                <br>
+                <a href="{{ url_for('find_ride') }}" class="btn btn-primary">
+                    Find a Ride
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+
+{% extends "base.html" %}
+
+{% block title %}Find a Ride | RideShare{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-heading">
+        <span class="section-tag">EXPLORE JOURNEYS</span>
+        <h1>Find Your Perfect Ride 🚗</h1>
+        <p>Discover people travelling your way and share the journey.</p>
+    </div>
+
+    <div class="form-card" style="max-width:100%; margin-bottom:35px;">
+        <form method="GET" action="{{ url_for('find_ride') }}" class="ride-search">
+
+            <div class="form-group">
+                <label>From</label>
+                <input type="text" name="source" class="form-control"
+                       placeholder="Starting location" value="{{ source }}">
+            </div>
+
+            <div class="form-group">
+                <label>To</label>
+                <input type="text" name="destination" class="form-control"
+                       placeholder="Your destination" value="{{ destination }}">
+            </div>
+
+            <div class="form-group">
+                <label>Travel Date</label>
+                <input type="date" name="ride_date" class="form-control"
+                       value="{{ ride_date }}" min="{{ today }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Search Rides →
+            </button>
+
+        </form>
+    </div>
+
+    <div class="section-title-row">
+        <h2>Available Rides</h2>
+        <a href="{{ url_for('offer_ride') }}">Offer a Ride +</a>
+    </div>
+
+    {% if rides %}
+
+        <div class="ride-grid">
+
+            {% for ride in rides %}
+
+                <div class="ride-card">
+
+                    <span class="section-tag">AVAILABLE JOURNEY</span>
+
+                    <h3 style="margin-top:15px;">
+                        {{ ride.source }} → {{ ride.destination }}
+                    </h3>
+
+                    <p>👤 Driver: <strong>{{ ride.driver_name }}</strong></p>
+                    <p>📅 Date: {{ ride.ride_date }}</p>
+                    <p>🕒 Time: {{ ride.ride_time }}</p>
+                    <p>🚘 Vehicle: {{ ride.vehicle }}</p>
+                    <p>💺 Available Seats: {{ ride.available_seats }}</p>
+
+                    <div class="ride-price">
+                        ₹{{ "%.2f"|format(ride.price) }}
+                        <small style="font-size:11px;color:#64748b;">/ seat</small>
+                    </div>
+
+                    <form method="POST"
+                          action="{{ url_for('book_ride', ride_id=ride.id) }}">
+
+                        <div class="form-group">
+                            <label>Select Seats</label>
+                            <input type="number" name="seats"
+                                   class="form-control"
+                                   min="1" max="{{ ride.available_seats }}"
+                                   value="1" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                                style="width:100%;">
+                            Book This Ride →
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <h3>🚘 No rides found</h3>
+            <p>Try another route or check back later for available journeys.</p>
+            <br>
+            <a href="{{ url_for('offer_ride') }}" class="btn btn-primary">
+                Offer Your Ride
+            </a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+
+{% block title %}Offer a Ride | RideShare{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-heading">
+        <span class="section-tag">SHARE YOUR JOURNEY</span>
+        <h1>Offer a Ride 🚘</h1>
+        <p>Have empty seats? Publish your journey and connect with fellow travellers.</p>
+    </div>
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Starting Location</label>
+                    <input type="text" name="source"
+                           class="form-control"
+                           placeholder="e.g. Guwahati" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Destination</label>
+                    <input type="text" name="destination"
+                           class="form-control"
+                           placeholder="e.g. Shillong" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Travel Date</label>
+                    <input type="date" name="ride_date"
+                           class="form-control"
+                           min="{{ today }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Departure Time</label>
+                    <input type="time" name="ride_time"
+                           class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Available Seats</label>
+                    <input type="number" name="seats"
+                           class="form-control"
+                           min="1" max="8"
+                           placeholder="e.g. 3" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price Per Seat (₹)</label>
+                    <input type="number" name="price"
+                           class="form-control"
+                           min="0" step="0.01"
+                           placeholder="e.g. 250" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Vehicle Details</label>
+                    <input type="text" name="vehicle"
+                           class="form-control"
+                           placeholder="e.g. Maruti Swift - White" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                    style="width:100%; margin-top:15px;">
+                Publish My Ride →
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

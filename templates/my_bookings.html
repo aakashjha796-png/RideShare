@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings | RideShare{% endblock %}
+
+{% block content %}
+<section class="page-container">
+
+    <div class="page-heading">
+        <span class="section-tag">YOUR JOURNEYS</span>
+        <h1>My Bookings</h1>
+        <p>Keep track of all the rides you have booked.</p>
+    </div>
+
+    {% if bookings %}
+        <div class="ride-grid">
+            {% for booking in bookings %}
+                <div class="ride-card">
+
+                    <div class="ride-card-top">
+                        <span class="status-badge">
+                            {{ booking.status }}
+                        </span>
+                        <span class="ride-price">
+                            ₹{{ booking.price * booking.seats_booked }}
+                        </span>
+                    </div>
+
+                    <h2>{{ booking.source }} → {{ booking.destination }}</h2>
+
+                    <div class="ride-details">
+                        <p>📅 {{ booking.ride_date }}</p>
+                        <p>🕒 {{ booking.ride_time }}</p>
+                        <p>🚘 {{ booking.vehicle }}</p>
+                        <p>👤 Driver: {{ booking.driver_name }}</p>
+                        <p>💺 Seats booked: {{ booking.seats_booked }}</p>
+                    </div>
+
+                    <p class="booking-total">
+                        Total Fare: ₹{{ booking.price * booking.seats_booked }}
+                    </p>
+
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            <h2>No bookings yet!</h2>
+            <p>You haven't booked any rides. Find a ride and start your journey.</p>
+            <a href="{{ url_for('find_ride') }}" class="btn btn-primary">
+                Find a Ride →
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}

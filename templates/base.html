@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RideShare{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="{{ url_for('index') }}" class="logo">
+        <span class="logo-icon">R</span> RideShare
+    </a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('find_ride') }}">Find a Ride</a>
+            <a href="{{ url_for('offer_ride') }}">Offer a Ride</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}" class="nav-login">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}" class="nav-login">Get Started</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="footer-logo">RideShare</div>
+    <p>Share your ride. Split your cost. Make new connections.</p>
+    <p class="copyright">© 2026 RideShare. All rights reserved.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

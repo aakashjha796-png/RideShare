@@ -1,0 +1,134 @@
+
+{% extends "base.html" %}
+
+{% block title %}RideShare | Travel Together{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-tag">
+            <span class="live-dot"></span>
+            SMARTER WAY TO TRAVEL
+        </div>
+
+        <h1>Good journeys<br>
+            are better <span>shared.</span>
+        </h1>
+
+        <p class="hero-description">
+            Connect with people travelling your way.
+            Share rides, save money and make every journey count.
+        </p>
+
+        <div class="hero-buttons">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('find_ride') }}" class="btn btn-primary">
+                    Find a Ride →
+                </a>
+                <a href="{{ url_for('offer_ride') }}" class="btn btn-outline">
+                    Offer a Ride
+                </a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary">
+                    Get Started →
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline">
+                    Login
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="hero-stats">
+            <div>
+                <h3>Easy</h3>
+                <p>Ride booking</p>
+            </div>
+            <div>
+                <h3>Smart</h3>
+                <p>Cost sharing</p>
+            </div>
+            <div>
+                <h3>Together</h3>
+                <p>Better journeys</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="visual-glow"></div>
+
+        <div class="travel-card">
+            <div class="car-icon">🚘</div>
+            <span class="travel-label">YOUR NEXT JOURNEY</span>
+            <h2>Travel together.</h2>
+            <p>Find your route. Meet your people.</p>
+
+            <div class="route-line">
+                <div class="route-point"></div>
+                <div class="route-details">
+                    <small>STARTING POINT</small>
+                    <strong>Your Location</strong>
+                </div>
+            </div>
+
+            <div class="route-line">
+                <div class="route-point destination"></div>
+                <div class="route-details">
+                    <small>DESTINATION</small>
+                    <strong>Your Destination</strong>
+                </div>
+            </div>
+
+            <div class="travel-bottom">
+                <span>✦ Safe</span>
+                <span>✦ Affordable</span>
+                <span>✦ Convenient</span>
+            </div>
+        </div>
+
+        <div class="floating-card">
+            <span>✦</span>
+            <div>
+                <strong>Share the journey</strong>
+                <small>Save more together</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="section-heading">
+        <span class="section-tag">WHY RIDESHARE?</span>
+        <h2>Travel smarter, not harder.</h2>
+        <p>Everything you need for a better travel experience.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Find Rides</h3>
+            <p>Discover available rides that match your destination and schedule.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🚗</div>
+            <h3>Offer Rides</h3>
+            <p>Have empty seats? Share your journey with other travellers.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Save Money</h3>
+            <p>Split travel expenses and make your journey more affordable.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2>Your next journey starts here.</h2>
+    <p>Join RideShare and make every trip count.</p>
+    <a href="{{ url_for('register') }}" class="btn btn-primary">Join RideShare →</a>
+</section>
+
+{% endblock %}
